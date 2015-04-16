@@ -46,9 +46,29 @@
 ;; entities
 (defentity websites)
 (defentity icons)
+(defentity labels)
+(defentity artists)
+(defentity albums)
+(defentity tracks)
+(defentity covers)
 
 (defn get-websites []
   (sql/select websites (sql/limit 1000)))
+
+(defn get-labels []
+  (sql/select labels (sql/limit 1000)))
+
+(defn get-artists []
+  (sql/select artists (sql/limit 1000)))
+
+(defn get-albums []
+  (sql/select albums (sql/limit 1000)))
+
+(defn get-tracks []
+  (sql/select tracks (sql/limit 1000)))
+
+(defn get-covers []
+  (sql/select covers (sql/limit 1000)))
 
 (defmethod validate* ::WebSite
   [website _]
