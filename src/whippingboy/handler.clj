@@ -49,6 +49,10 @@
            (context "/artists" []
                     (GET "/" []
                          (http/ok (data/get-artists)))
+                    (POST "/" [:as req]
+                          (let [artist (data/create-artist (keywordize-keys (req :body)))
+                                location (http/url-from req (str (artist :id)))]
+                            (http/created location artist)))
                     (GET "/:id" [id]
                          (if-let [data (data/get-artist (Integer. id))]
                            (http/ok data)
@@ -57,6 +61,10 @@
            (context "/tracks" []
                     (GET "/" []
                          (http/ok (data/get-tracks)))
+                    (POST "/" [:as req]
+                          (let [track (data/create-track (keywordize-keys (req :body)))
+                                location (http/url-from req (str (track :id)))]
+                            (http/created location track)))
                     (GET "/:id" [id]
                          (if-let [data (data/get-track (Integer. id))]
                            (http/ok data)
@@ -65,6 +73,10 @@
            (context "/covers" []
                     (GET "/" []
                          (http/ok (data/get-covers)))
+                    (POST "/" [:as req]
+                          (let [cover (data/create-cover (keywordize-keys (req :body)))
+                                location (http/url-from req (str (cover :id)))]
+                            (http/created location cover)))
                     (GET "/:id" [id]
                          (if-let [data (data/get-cover (Integer. id))]
                            (http/ok data)
@@ -73,6 +85,10 @@
            (context "/labels" []
                     (GET "/" []
                          (http/ok (data/get-labels)))
+                    (POST "/" [:as req]
+                          (let [label (data/create-label (keywordize-keys (req :body)))
+                                location (http/url-from req (str (label :id)))]
+                            (http/created location label)))
                     (GET "/:id" [id]
                          (if-let [data (data/get-label (Integer. id))]
                            (http/ok data)
@@ -81,6 +97,10 @@
            (context "/albums" []
                     (GET "/" []
                          (http/ok (data/get-albums)))
+                    (POST "/" [:as req]
+                          (let [album (data/create-album (keywordize-keys (req :body)))
+                                location (http/url-from req (str (album :id)))]
+                            (http/created location album)))
                     (GET "/:id" [id]
                          (if-let [data (data/get-albums (Integer. id))]
                            (http/ok data)

@@ -56,7 +56,6 @@
 (defmigration add-artists-table
   (up [] (create
           (tbl :artists
-               (refer-to :labels)
                (varchar :name 255))))
   (down [] (drop (table :artists))))
 

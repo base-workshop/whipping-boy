@@ -97,10 +97,76 @@
     (if-not (empty? message)
       (throw+ {:type ::invalid} message))))
 
+(defmethod validate* ::Artist
+  [artist _]
+  (let [v (validation-set (presence-of :name))
+        message (v artist)]
+    (if-not (empty? message)
+      (throw+ {:type ::invalid} message))))
+
+(defmethod validate* ::Label
+  [label _]
+  (let [v (validation-set (presence-of :name)
+                          (presence-of :country))
+        message (v label)]
+    (if-not (empty? message)
+      (throw+ {:type ::invalid} message))))
+
+(defmethod validate* ::Album
+  [album _]
+  (let [v (validation-set (presence-of :name)
+                          (presence-of :year)
+                          (presence-of :artist_id))
+        message (v album)]
+    (if-not (empty? message)
+      (throw+ {:type ::invalid} message))))
+
+(defmethod validate* ::Track
+  [track _]
+  (let [v (validation-set (presence-of :name)
+                          (presence-of :number)
+                          (presence-of :album_id))
+        message (v track)]
+    (if-not (empty? message)
+      (throw+ {:type ::invalid} message))))
+
+(defmethod validate* ::Cover
+  [cover _]
+  (let [v (validation-set (presence-of :url)
+                          (presence-of :album_id))
+        message (v cover)]
+    (if-not (empty? message)
+      (throw+ {:type ::invalid} message))))
+
 (defn create-website [website]
   (validate [website ::WebSite])
   (sql/insert websites
               (sql/values (select-keys website [:url :rank]))))
+
+(defn create-artist [artist]
+  (validate [artist ::Artist])
+  (sql/insert artists
+              (sql/values (select-keys artist [:name :label_id]))))
+
+(defn create-label [label]
+  (validate [label ::Label])
+  (sql/insert labels
+              (sql/values (select-keys label [:name :country]))))
+
+(defn create-album [album]
+  (validate [album ::Album])
+  (sql/insert albums
+              (sql/values (select-keys album [:name :year :artist_id :label_id]))))
+
+(defn create-track [track]
+  (validate [track ::Track])
+  (sql/insert tracks
+              (sql/values (select-keys track [:name :number :album-id :artist_id]))))
+
+(defn create-cover [cover]
+  (validate [cover ::Cover])
+  (sql/insert covers
+              (sql/values (select-keys cover [:url :album_id]))))
 
 (defn get-icon-for-website [website-id]
   (first (sql/select icons (sql/where {:website_id website-id}))))
