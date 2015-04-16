@@ -64,7 +64,7 @@
                 (sql/values (select-keys new-website [:url :rank :created_at :updated_at])))))
 
 (defn get-icon-for-website [website-id]
-  (first (sql/select icons (sql/where {:web_site_id website-id}))))
+  (first (sql/select icons (sql/where {:website_id website-id}))))
 
 (defn website-with-icon [website]
   (let [website-id (:id website)
