@@ -48,12 +48,32 @@
 
 (sql/defentity icons)
 (sql/defentity websites (sql/has-one icons {:fk :website_id}))
+(sql/defentity labels)
+(sql/defentity artists)
+(sql/defentity albums)
+(sql/defentity tracks)
+(sql/defentity covers)
 
 (defn get-fixed-websites []
   (sql/select websites (sql/with icons) (sql/limit 1000)))
 
 (defn get-websites []
   (sql/select websites (sql/limit 1000)))
+
+(defn get-labels []
+  (sql/select labels (sql/limit 1000)))
+
+(defn get-artists []
+  (sql/select artists (sql/limit 1000)))
+
+(defn get-albums []
+  (sql/select albums (sql/limit 1000)))
+
+(defn get-tracks []
+  (sql/select tracks (sql/limit 1000)))
+
+(defn get-covers []
+  (sql/select covers (sql/limit 1000)))
 
 (defmethod validate* ::WebSite
   [website _]

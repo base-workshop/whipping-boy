@@ -44,7 +44,22 @@
                     (OPTIONS "/" []
                              (http/options [:options :get :head :put :post :delete]))
                     (ANY "/" []
-                         (http/method-not-allowed [:options :get :head :put :post :delete]))))
+                         (http/method-not-allowed [:options :get :head :put :post :delete])))
+           (context "/artists" []
+                    (GET "/" []
+                         (http/ok (data/get-artists))))
+           (context "/tracks" []
+                    (GET "/" []
+                         (http/ok (data/get-tracks))))
+           (context "/covers" []
+                    (GET "/" []
+                         (http/ok (data/get-covers))))
+           (context "/labels" []
+                    (GET "/" []
+                         (http/ok (data/get-labels))))
+           (context "/albums" []
+                    (GET "/" []
+                         (http/ok (data/get-albums)))))
   (route/not-found "Nothing to see here, move along now"))
 
 (def app
