@@ -62,3 +62,10 @@
   (->
    (response body)
    (status 200)))
+
+(defn not-found
+  "Return an HTTP 404 (OK)"
+  []
+  (->
+   (response nil)
+   (status 404)))

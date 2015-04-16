@@ -75,6 +75,21 @@
 (defn get-covers []
   (sql/select covers (sql/limit 1000)))
 
+(defn get-label [id]
+  (first (sql/select labels (sql/where {:id id}))))
+
+(defn get-artist [id]
+  (first (sql/select artists (sql/where {:id id}))))
+
+(defn get-album [id]
+  (first (sql/select albums (sql/where {:id id}))))
+
+(defn get-track [id]
+  (first (sql/select tracks (sql/where {:id id}))))
+
+(defn get-cover [id]
+  (first (sql/select covers (sql/where {:id id}))))
+
 (defmethod validate* ::WebSite
   [website _]
   (let [v (validation-set (presence-of :url))

@@ -45,22 +45,48 @@
                              (http/options [:options :get :head :put :post :delete]))
                     (ANY "/" []
                          (http/method-not-allowed [:options :get :head :put :post :delete])))
+
            (context "/artists" []
                     (GET "/" []
-                         (http/ok (data/get-artists))))
+                         (http/ok (data/get-artists)))
+                    (GET "/:id" [id]
+                         (if-let [data (data/get-artist (Integer. id))]
+                           (http/ok data)
+                           (http/not-found))))
+
            (context "/tracks" []
                     (GET "/" []
-                         (http/ok (data/get-tracks))))
+                         (http/ok (data/get-tracks)))
+                    (GET "/:id" [id]
+                         (if-let [data (data/get-track (Integer. id))]
+                           (http/ok data)
+                           (http/not-found))))
+
            (context "/covers" []
                     (GET "/" []
-                         (http/ok (data/get-covers))))
+                         (http/ok (data/get-covers)))
+                    (GET "/:id" [id]
+                         (if-let [data (data/get-cover (Integer. id))]
+                           (http/ok data)
+                           (http/not-found))))
+
            (context "/labels" []
                     (GET "/" []
-                         (http/ok (data/get-labels))))
+                         (http/ok (data/get-labels)))
+                    (GET "/:id" [id]
+                         (if-let [data (data/get-label (Integer. id))]
+                           (http/ok data)
+                           (http/not-found))))
+
            (context "/albums" []
                     (GET "/" []
-                         (http/ok (data/get-albums)))))
-  (route/not-found "Nothing to see here, move along now"))
+                         (http/ok (data/get-albums)))
+                    (GET "/:id" [id]
+                         (if-let [data (data/get-albums (Integer. id))]
+                           (http/ok data)
+                           (http/not-found))))
+
+  (route/not-found "Nothing to see here, move along now")))
 
 (def app
   "Application entry point & handler chain"
