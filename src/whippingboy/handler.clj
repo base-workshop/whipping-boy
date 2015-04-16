@@ -13,7 +13,6 @@
             [compojure.route :as route]
             [whippingboy.data :as data]
             [whippingboy.http :as http]
-            [whippingboy.query :as query]
             [whippingboy.middleware :refer [wrap-exception-handler
                                         wrap-request-logger
                                         wrap-response-logger]]
@@ -29,13 +28,13 @@
                 (http/method-not-allowed [:options]))
            (context "/websites" []
                     (GET "/" []
-                         (http/ok (query/get-websites)))
+                         (http/ok (data/get-websites-with-icons)))
                     (GET "/:id" [id]
                          (http/not-implemented))
                     (HEAD "/:id" [id]
                           (http/not-implemented))
                     (POST "/" [:as req]
-                          (let [website (query/create-website (keywordize-keys (req :body)))
+                          (let [website (data/create-website (keywordize-keys (req :body)))
                                 location (http/url-from req (str (website :id)))]
                             (http/created location website)))
                     (PUT "/:id" [id]
