@@ -61,6 +61,9 @@
 (defn get-websites []
   (sql/select websites (sql/limit 1000)))
 
+(defn get-website []
+  (sql/select websites (sql/limit 1000)))
+
 (defn get-labels []
   (sql/select labels (sql/limit 1000)))
 
@@ -186,6 +189,42 @@
   (validate [team ::Team])
   (sql/insert teams
               (sql/values (select-keys team [:name]))))
+
+(defn update-website [id website]
+  (validate [website ::WebSite])
+  (sql/update websites
+              (sql/where {:id id})
+              (sql/set-fields (select-keys website [:url :rank]))))
+
+(defn update-artist [id artist]
+  (validate [artist ::Artist])
+  (sql/update artists
+              (sql/where  {:id id})
+              (sql/set-fields (select-keys artist [:name :label_id]))))
+
+(defn update-label [id label]
+  (validate [label ::Label])
+  (sql/update labels
+              (sql/where  {:id id})
+              (sql/set-fields (select-keys label [:name :country]))))
+
+(defn update-album [id album]
+  (validate [album ::Album])
+  (sql/update albums
+              (sql/where  {:id id})
+              (sql/set-fields (select-keys album [:name :year :artist_id :label_id]))))
+
+(defn update-track [id track]
+  (validate [track ::Track])
+  (sql/update tracks
+              (sql/where  {:id id})
+              (sql/set-fields (select-keys track [:name :number :album-id :artist_id]))))
+
+(defn update-cover [id cover]
+  (validate [cover ::Cover])
+  (sql/update covers
+              (sql/where  {:id id})
+              (sql/set-fields (select-keys cover [:url :album_id]))))
 
 (defn get-icon-for-website [website-id]
   (first (sql/select icons (sql/where {:website_id website-id}))))
