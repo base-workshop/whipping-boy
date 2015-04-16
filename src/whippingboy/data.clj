@@ -1,4 +1,4 @@
-(ns whipping-boy.data
+(ns whippingboy.data
   (:require [clj-time.core :as time]
             [monger.joda-time]
             [validateur.validation :refer [presence-of
@@ -20,7 +20,6 @@
 (korma/defdb db db-connection-info)
 ; set up lobos
 (lobos/open-global db-connection-info)
-
 
 ;; Utility Functions
 ;;

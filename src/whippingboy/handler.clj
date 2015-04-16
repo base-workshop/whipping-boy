@@ -1,4 +1,4 @@
-(ns whipping-boy.handler
+(ns whippingboy.handler
   (:require [clojure.walk :refer [keywordize-keys]]
             [compojure.core :refer [ANY
                                     DELETE
@@ -11,10 +11,10 @@
                                     defroutes]]
             [compojure.handler :as handler]
             [compojure.route :as route]
-            [whipping-boy.data :as data]
-            [whipping-boy.http :as http]
-            [whipping-boy.query :as query]
-            [whipping-boy.middleware :refer [wrap-exception-handler
+            [whippingboy.data :as data]
+            [whippingboy.http :as http]
+            [whippingboy.query :as query]
+            [whippingboy.middleware :refer [wrap-exception-handler
                                         wrap-request-logger
                                         wrap-response-logger]]
             [ring.middleware.format-response :refer [wrap-restful-response]]

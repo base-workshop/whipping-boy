@@ -1,6 +1,6 @@
 ;; HTTP Helper Functions
 ;;
-(ns whipping-boy.http
+(ns whippingboy.http
   (:require [clojure.string :refer [upper-case join]]
             [ring.mock.request :refer [header]]
             [ring.util.response :refer [response status]]))

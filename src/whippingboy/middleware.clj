@@ -1,7 +1,7 @@
 ;; Ring Middleware & Utility Functions
 ;;
 
-(ns whipping-boy.middleware
+(ns whippingboy.middleware
   (:require [cheshire.core :refer :all]
             [cheshire.generate :refer [add-encoder encode-str remove-encoder]]
             [clj-time.format :as format]

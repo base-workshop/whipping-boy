@@ -1,4 +1,4 @@
-(ns whipping-boy.helpers
+(ns whippingboy.helpers
   (:import java.sql.Date
            org.joda.time.LocalDate)
   (:refer-clojure :exclude [bigint boolean char double float time])

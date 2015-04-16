@@ -20,7 +20,7 @@
                  [ring-mock "0.1.5"]]
   :plugins [[lein-ring "0.9.3"]
             [lein-ancient "0.6.6"]]
-  :ring {:handler whipping-boy.handler/app
+  :ring {:handler whippingboy.handler/app
          :uberwar-name "whipping-boy.war"}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
