@@ -53,6 +53,7 @@
 (sql/defentity albums)
 (sql/defentity tracks)
 (sql/defentity covers)
+(sql/defentity teams)
 
 (defn get-fixed-websites []
   (sql/select websites (sql/with icons) (sql/limit 1000)))
@@ -75,6 +76,9 @@
 (defn get-covers []
   (sql/select covers (sql/limit 1000)))
 
+(defn get-teams []
+  (sql/select teams (sql/limit 1000)))
+
 (defn get-label [id]
   (first (sql/select labels (sql/where {:id id}))))
 
@@ -89,6 +93,9 @@
 
 (defn get-cover [id]
   (first (sql/select covers (sql/where {:id id}))))
+
+(defn get-team [id]
+  (first (sql/select teams (sql/where {:id id}))))
 
 (defmethod validate* ::WebSite
   [website _]
@@ -138,6 +145,13 @@
     (if-not (empty? message)
       (throw+ {:type ::invalid} message))))
 
+(defmethod validate* ::Team
+  [team _]
+  (let [v (validation-set (presence-of :name))
+        message (v team)]
+    (if-not (empty? message)
+      (throw+ {:type ::invalid} message))))
+
 (defn create-website [website]
   (validate [website ::WebSite])
   (sql/insert websites
@@ -161,12 +175,17 @@
 (defn create-track [track]
   (validate [track ::Track])
   (sql/insert tracks
-              (sql/values (select-keys track [:name :number :album-id :artist_id]))))
+              (sql/values (select-keys track [:name :number :album_id :artist_id]))))
 
 (defn create-cover [cover]
   (validate [cover ::Cover])
   (sql/insert covers
               (sql/values (select-keys cover [:url :album_id]))))
+
+(defn create-team [team]
+  (validate [team ::Team])
+  (sql/insert teams
+              (sql/values (select-keys team [:name]))))
 
 (defn get-icon-for-website [website-id]
   (first (sql/select icons (sql/where {:website_id website-id}))))
@@ -187,3 +206,6 @@
            (-> website
                (select-keys [:url :rank :id])
                (assoc :has_icon (not (nil? website_id)))))))
+
+(defn get-all-teams []
+  (assoc {} :tolal_teams "0"))

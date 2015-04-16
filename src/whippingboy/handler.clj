@@ -106,7 +106,21 @@
                            (http/ok data)
                            (http/not-found))))
 
-  (route/not-found "Nothing to see here, move along now")))
+           (context "/teams" []
+                    (GET "/" []
+                         (http/ok (data/get-teams)))
+                    (GET "/all" []
+                         (http/ok (data/get-all-teams)))
+                    (POST "/" [:as req]
+                          (let [team (data/create-team (keywordize-keys (req :body)))
+                                location (http/url-from req (str (team :id)))]
+                            (http/created location team)))
+                    (GET "/:id" [id]
+                         (if-let [data (data/get-team (Integer. id))]
+                           (http/ok data)
+                           (http/not-found)))))
+
+  (route/not-found "Nothing to see here, move along now"))
 
 (def app
   "Application entry point & handler chain"
