@@ -226,6 +226,38 @@
               (sql/where  {:id id})
               (sql/set-fields (select-keys cover [:url :album_id]))))
 
+(defn delete-album [id]
+  (sql/delete albums
+              (sql/where  {:id id})))
+
+(defn delete-label [id]
+  (sql/delete labels
+              (sql/where  {:id id})))
+
+(defn delete-artist [id]
+  (sql/delete artists
+              (sql/where  {:id id})))
+
+(defn delete-album [id]
+  (sql/delete albums
+              (sql/where  {:id id})))
+
+(defn delete-track [id]
+  (sql/delete tracks
+              (sql/where  {:id id})))
+
+(defn delete-cover [id]
+  (sql/delete covers
+              (sql/where  {:id id})))
+
+(defn delete-team [id]
+  (sql/delete teams
+              (sql/where  {:id id})))
+
+(defn delete-website [id]
+  (sql/delete websites
+              (sql/where  {:id id})))
+
 (defn get-icon-for-website [website-id]
   (first (sql/select icons (sql/where {:website_id website-id}))))
 

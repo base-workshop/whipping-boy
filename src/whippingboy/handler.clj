@@ -29,6 +29,8 @@
            (context "/websites" []
                     (GET "/" []
                          (http/ok (data/get-websites-with-icons)))
+                    (DELETE "/:id" [id]
+                            (http/ok (data/delete-website (Integer. id))))
                     (GET "/:id" [id]
                          (http/not-implemented))
                     (HEAD "/:id" [id]
@@ -54,6 +56,8 @@
            (context "/artists" []
                     (GET "/" []
                          (http/ok (data/get-artists)))
+                    (DELETE "/:id" [id]
+                            (http/ok (data/delete-artist (Integer. id))))
                     (POST "/" [:as req]
                           (let [artist (data/create-artist (keywordize-keys (req :body)))
                                 location (http/url-from req (str (artist :id)))]
@@ -73,6 +77,8 @@
            (context "/tracks" []
                     (GET "/" []
                          (http/ok (data/get-tracks)))
+                    (DELETE "/:id" [id]
+                            (http/ok (data/delete-track (Integer. id))))
                     (POST "/" [:as req]
                           (let [track (data/create-track (keywordize-keys (req :body)))
                                 location (http/url-from req (str (track :id)))]
@@ -92,6 +98,8 @@
            (context "/covers" []
                     (GET "/" []
                          (http/ok (data/get-covers)))
+                    (DELETE "/:id" [id]
+                            (http/ok (data/delete-cover (Integer. id))))
                     (POST "/" [:as req]
                           (let [cover (data/create-cover (keywordize-keys (req :body)))
                                 location (http/url-from req (str (cover :id)))]
@@ -111,6 +119,8 @@
            (context "/labels" []
                     (GET "/" []
                          (http/ok (data/get-labels)))
+                    (DELETE "/:id" [id]
+                            (http/ok (data/delete-label (Integer. id))))
                     (POST "/" [:as req]
                           (let [label (data/create-label (keywordize-keys (req :body)))
                                 location (http/url-from req (str (label :id)))]
@@ -130,6 +140,8 @@
            (context "/albums" []
                     (GET "/" []
                          (http/ok (data/get-albums)))
+                    (DELETE "/:id" [id]
+                            (http/ok (data/delete-album (Integer. id))))
                     (POST "/" [:as req]
                           (let [album (data/create-album (keywordize-keys (req :body)))
                                 location (http/url-from req (str (album :id)))]
@@ -149,6 +161,8 @@
            (context "/teams" []
                     (GET "/" []
                          (http/ok (data/get-teams)))
+                    (DELETE "/:id" [id]
+                            (http/ok (data/delete-team (Integer. id))))
                     (GET "/all" []
                          (http/ok (data/get-all-teams)))
                     (POST "/" [:as req]
