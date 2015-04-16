@@ -23,7 +23,7 @@
 
 (defmacro tbl [name & elements]
   `(-> (table ~name)
-       (timestamps)
+       ;; (timestamps)
        ~@(reverse elements)
        (surrogate-key)))
 
@@ -55,11 +55,11 @@
                         time-coerce/to-sql-date
                         m))
 
-(defmacro defentity
-  [ent & body]
-  `(sql/defentity ~ent
-     (sql/prepare joda-date->sql-date)
-     (sql/prepare joda-datetime->sql-timestamp)
-     (sql/transform sql-date->joda-date)
-     (sql/transform sql-timestamp->joda-datetime)
-     ~@body))
+;; (defmacro defentity
+;;   [ent & body]
+;;   `(sql/defentity ~ent
+;;      (sql/prepare joda-date->sql-date)
+;;      (sql/prepare joda-datetime->sql-timestamp)
+;;      (sql/transform sql-date->joda-date)
+;;      (sql/transform sql-timestamp->joda-datetime)
+;;      ~@body))

@@ -44,8 +44,13 @@
   (doseq [test tests] (apply validate* test)))
 
 ;; entities
-(defentity websites)
-(defentity icons)
+(declare websites icons)
+
+(sql/defentity icons)
+(sql/defentity websites (sql/has-one icons {:fk :website_id}))
+
+(defn get-fixed-websites []
+  (sql/select websites (sql/with icons) (sql/limit 1000)))
 
 (defn get-websites []
   (sql/select websites (sql/limit 1000)))
@@ -58,10 +63,9 @@
       (throw+ {:type ::invalid} message))))
 
 (defn create-website [website]
-  (let [new-website (created-now (updated-now website))]
-    (validate [new-website ::WebSite])
-    (sql/insert websites
-                (sql/values (select-keys new-website [:url :rank :created_at :updated_at])))))
+  (validate [website ::WebSite])
+  (sql/insert websites
+              (sql/values (select-keys website [:url :rank]))))
 
 (defn get-icon-for-website [website-id]
   (first (sql/select icons (sql/where {:website_id website-id}))))
@@ -74,3 +78,11 @@
 (defn get-websites-with-icons []
   (let [websites (get-websites)]
     (assoc {} :items (map website-with-icon websites))))
+
+(defn get-fixed-websites-with-icons []
+  (assoc {} :items
+         (for [{:keys [:website_id] :as website}
+               (get-fixed-websites)]
+           (-> website
+               (select-keys [:url :rank :id])
+               (assoc :has_icon (not (nil? website_id)))))))
