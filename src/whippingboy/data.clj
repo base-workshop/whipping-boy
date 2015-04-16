@@ -208,4 +208,7 @@
                (assoc :has_icon (not (nil? website_id)))))))
 
 (defn get-all-teams []
-  (assoc {} :tolal_teams "0"))
+  (assoc {} :tolal_teams (count (sql/select teams))))
+
+(defn total-teams []
+  (first (sql/select teams (sql/aggregate (count :*) :total_teams))))
