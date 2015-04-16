@@ -64,8 +64,15 @@
    (status 200)))
 
 (defn not-found
-  "Return an HTTP 404 (OK)"
+  "Return an HTTP 404 (Not found)"
   []
   (->
    (response nil)
    (status 404)))
+
+(defn not-updated
+  "Return an HTTP 422 (Invalid data)"
+  []
+  (->
+   (response nil)
+   (status 422)))
