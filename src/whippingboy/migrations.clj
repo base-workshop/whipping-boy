@@ -45,3 +45,43 @@
                (refer-to :positions)
                (varchar :name 255))))
   (down [] (drop (table :players))))
+
+(defmigration add-labels-table
+  (up [] (create
+          (tbl :labels
+               (varchar :name 255)
+               (varchar :country 255))))
+  (down [] (drop (table :labels))))
+
+(defmigration add-artists-table
+  (up [] (create
+          (tbl :artists
+               (refer-to :labels)
+               (varchar :name 255))))
+  (down [] (drop (table :artists))))
+
+(defmigration add-albums-table
+  (up [] (create
+          (tbl :albums
+               (refer-to :artists)
+               (refer-to :labels)
+               (varchar :name 255)
+               (integer :year))))
+  (down [] (drop (table :albums))))
+
+
+(defmigration add-tracks-table
+  (up [] (create
+          (tbl :tracks
+               (refer-to :albums)
+               (refer-to :artists)
+               (varchar :name 255)
+               (integer :number))))
+  (down [] (drop (table :tracks))))
+
+(defmigration add-covers-table
+  (up [] (create
+          (tbl :covers
+               (refer-to :albums)
+               (varchar :url 255))))
+  (down [] (drop (table :covers))))
