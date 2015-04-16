@@ -28,7 +28,7 @@
                 (http/method-not-allowed [:options]))
            (context "/websites" []
                     (GET "/" []
-                         (http/ok (data/get-websites-with-icons)))
+                         (http/ok (data/get-fixed-websites-with-icons)))
                     (DELETE "/:id" [id]
                             (http/ok (data/delete-website (Integer. id))))
                     (GET "/:id" [id]
